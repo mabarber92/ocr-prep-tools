@@ -9,6 +9,7 @@ Created on Mon Jan  4 15:51:18 2021
 
 from pdf2image import convert_from_path
 from pdf2image import pdfinfo_from_path
+from PIL import Image
 import os
 import re
 
@@ -23,7 +24,7 @@ def splitPdf(pathIn, folderOut, first_page = None, last_page = None):
     print("converted")
 
 
-def splitSelection(pdfDir, outDir, firstPage = 30, pageCount = None):
+def splitSelection(pdfDir, outDir, firstPage = None, pageCount = None):
     for root, dirs, files in os.walk(pdfDir, topdown=False):
         for name in files:
             if re.search("\.pdf", name):
@@ -47,22 +48,27 @@ def splitSelection(pdfDir, outDir, firstPage = 30, pageCount = None):
                             firstPage = firstPage - 1                 
                         splitPdf(filePath, outPath, first_page = firstPage, last_page = firstPage + pageCount)
 
-
+def image_dir_to_pdf(image_dir, pdf_path):
+    """Take a directory of images and recreate a pdf"""
+    images = [Image.open(image_dir + f)
+    for f in os.listdir(image_dir)
+    ]    
+    
+    images[0].save(
+        pdf_path, "PDF" ,resolution=100.0, save_all=True, append_images=images[1:]
+    )
 
 # pdfDir = "/mnt/d/Primary sources/manuscripts/"
 # outFolder = "/mnt/c/Users/mathe/Downloads/"
 
 # print(pdfDir)
 
-generalDir = "/mnt/c/Users/mathe/Documents/Github-repos/DH23/session_6/Yousef"
-print(generalDir)
+
+
 
 # for folder in os.listdir(generalDir):
 #     print(folder)
 #     folderPath = os.path.join(generalDir, folder)
-
-splitSelection(generalDir, generalDir, firstPage=30, pageCount = 10)
-
 
 # splitSelection(pdfDir, outFolder, firstPage=30, pageCount = 2)
 
