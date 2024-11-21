@@ -79,5 +79,5 @@ def createMETS(pathZip):
     os.chdir("../..")
     shutil.rmtree(tempDir)
 
-pathToZip = "C:/Users/mathe/Documents/Github-repos/ocr-utilities/simple_archive_prefixed.zip"
-createMETS(pathToZip)
+# pathToZip = "C:/Users/mathe/Documents/Github-repos/ocr-utilities/simple_archive_prefixed.zip"
+# createMETS(pathToZip)
